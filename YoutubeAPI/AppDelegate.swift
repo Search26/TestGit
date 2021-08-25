@@ -4,19 +4,33 @@
 //
 //  Created by Ney on 24/08/2021.
 //
-
+import GoogleSignIn
 import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        GIDSignIn.sharedInstance().clientID = "1061662519607-sugh5e8n43uedl2q25drou8ub99fvav8.apps.googleusercontent.com"
+
+        
         return true
     }
-
+    
+//    func applicationDidFinishLaunching(_ application: UIApplication) {
+//        GIDSignIn.sharedInstance().clientID = "1061662519607-sugh5e8n43uedl2q25drou8ub99fvav8.apps.googleusercontent.com"
+//    }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        let sourceApplication = options[UIApplication.OpenURLOptionsKey.sourceApplication] as! String
+        let annotation = options[UIApplication.OpenURLOptionsKey.annotation]
+        return GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
+    }
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
